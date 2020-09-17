@@ -6,14 +6,31 @@ class Pessoa:
         self.nome = nome
         self.filhos = list(filhos)
 
-
     def cumprimentar(self):
-        return f'Ola {id(self)}'
+        return f'Ola meu nome e {self.nome}'
+
+    @staticmethod
+    def metodo_estatico():
+        return 69
+
+    @classmethod
+    def nome_e_atributos_de_classe(cls):
+        return f'{cls} - olhos {cls.olhos}'
+
+
+class Homem(Pessoa):
+    def cumprimentar(self):
+        cumprimentar_da_classe_pai = super().cumprimentar()
+        return f'{cumprimentar_da_classe_pai}. Aperto de mao!'
+
+
+class Mutante(Pessoa):
+    olhos = 3
 
 
 if __name__ == '__main__':
-    raphael = Pessoa(nome='Raphael')
-    ronaldo = Pessoa(raphael, nome='Ronaldo')
+    raphael = Mutante(nome='Raphael')
+    ronaldo = Homem(raphael, nome='Ronaldo')
     print(Pessoa.cumprimentar(ronaldo))
     print(id(ronaldo))
     print(ronaldo.cumprimentar())
@@ -30,8 +47,17 @@ if __name__ == '__main__':
     del raphael.olhos
     print(ronaldo.__dict__)
     print(raphael.__dict__)
-    Pessoa.olhos = 3
     print(Pessoa.olhos)
     print(raphael.olhos)
     print(ronaldo.olhos)
     print(id(Pessoa.olhos), id(raphael.olhos), id(ronaldo.olhos))
+    print(Pessoa.metodo_estatico(), raphael.metodo_estatico(), ronaldo.metodo_estatico())
+    print(Pessoa.nome_e_atributos_de_classe(), raphael.nome_e_atributos_de_classe(),
+          ronaldo.nome_e_atributos_de_classe())
+    pessoa = Pessoa('Anonimo')
+    print(isinstance(pessoa, Pessoa))
+    print(isinstance(pessoa, Homem))
+    print(isinstance(raphael, Pessoa))
+    print(isinstance(raphael, Homem))
+    print(raphael.cumprimentar())
+    print(ronaldo.cumprimentar())
